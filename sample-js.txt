@@ -1,0 +1,91 @@
+//Sample index js. before bringing readline sync:
+
+
+import openai from "./config/open-ai.js";
+import readlineSync from 'readline-sync';
+import colors from 'colors';
+
+// We need an async function for using createChatCompletion method of openai
+async function main()
+{
+const ChatCompletion = await openai.createChatCompletion(
+    {
+        model: 'gpt-3.5-turbo',
+        messages: [
+            { role: 'user' , content: 'What is the capital of the netherlands?'}
+        ]
+    }
+);
+console.log(ChatCompletion.data.choices[0].message.content)
+
+}
+
+
+main();
+
+
+
+
+
+
+
+// without giving chatgpt chat history:
+
+
+import openai from "./config/open-ai.js";
+import readlineSync from 'readline-sync';
+import colors from 'colors';
+import { OpenAIApi } from "openai";
+
+// We need an async function for using createChatCompletion method of openai
+async function main()
+{
+     console.log(colors.bold.green('Welcome to the chatbot program!'))
+     console.log(colors.bold.green('You can start chatting with the bot.'))
+
+
+    while(true)
+    {
+        // readlinesync allows you to respond to prompts in terminal that you create.
+        const userInput = readlineSync.question(colors.yellow('You: '));
+
+
+      
+        try{
+        
+
+   
+            // Call the API with user input
+           const completion = await openai.createChatCompletion(
+            {
+                model: 'gpt-3.5-turbo',
+                messages: [{ role: 'user' , content: userInput}]
+            }
+           );
+
+        //    Get completion text/content
+        const completionText = completion.data.choices[0].message.content;
+
+
+              // allow exiting the loop
+              if (userInput.toLowerCase() === 'exit')
+              {
+                console.log(colors.green('Bot: ' + completionText))
+                return;
+              }
+
+              console.log(colors.green('Bot: ' + completionText))
+
+        }
+        catch(error)
+        {
+            console.error(colors.red(error))
+
+        }
+
+    }
+
+}
+
+
+main();
