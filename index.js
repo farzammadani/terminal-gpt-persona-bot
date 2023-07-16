@@ -20,29 +20,90 @@ const writetofile = true;
 // We need an async function for using createChatCompletion method of openai
 async function main()
 {
-     console.log(colors.bold.green('Welcome to the chatbot program!'))
-     if(persona != "")
+     
+
+ if(persona != "")
      {
-        console.log(colors.bold.magenta('Custom persona is active. Switch to default mode if you want more accurate results.'));
+        console.log(colors.bold.bgBlue('Custom persona is active. Switch to default mode if you want more accurate results.'));
      }
      if(mode != "")
      {
-        console.log(colors.bold.magenta(`Custom mode is active: ${mode}`));
+        console.log(colors.bgBlack(`______________________________________________`));
+        console.log(colors.bgBlack(`-The following custom mode is active: ${mode}`));
      }
      if (writetofile == true)
      {
-        console.log(colors.bold.magenta(`**The session will to written to a file. You will need to type exit for the text to be written in the file.**`));
-     }
+        console.log(colors.bgBlack(`-The session will to written to a file. You will need to type exit for the text to be written in the file or continue chatting.**`));
+        console.log(colors.bgBlack(`______________________________________________`));
+    }
+
+    console.log(colors.bold.yellow(`                                                                                        
+                                                                                        
+                                                                                        
+                                                                                        
+                                                                                        
+                                            ██████████                                  
+                                      ░░  ██░░░░░░░░░░██                                
+                                        ██░░░░░░░░░░░░░░██                              
+                                        ██░░░░░░░░████░░██████████                      
+                            ██          ██░░░░░░░░████░░██▒▒▒▒▒▒██                      
+                          ██░░██        ██░░░░░░░░░░░░░░██▒▒▒▒▒▒██                      
+                          ██░░░░██      ██░░░░░░░░░░░░░░████████                        
+                        ██░░░░░░░░██      ██░░░░░░░░░░░░██                              
+                        ██░░░░░░░░████████████░░░░░░░░██                                
+                        ██░░░░░░░░██░░░░░░░░░░░░░░░░░░░░██                              
+                        ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██                            
+                        ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██                            
+                        ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██                            
+                        ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██                            
+                        ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██                            
+                        ██░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░██                              
+                          ██░░░░░░░░░░░░░░░░░░░░░░░░░░██                                
+                            ██████░░░░░░░░░░░░░░░░████                                  
+                                  ████████████████                                      
+                                                                                        
+                                                                                        
+                                                                                        
+                                                                                        
+                                                                                        
+ `));
+
+ if (writetofile === false)
+ {
+
+    console.log(colors.bold.green('Ducklington: ') +  'Hi. I am Ducklington. How can I help you? ')
      
-
-     console.log(colors.bold.green('You can start chatting with the bot.'))
-
+ }
      if (writetofile === true)
      {
-        let sessionname = readlineSync.question(colors.magenta('Set session name or leave empty: '));
-        let randomnr = Math.floor(Math.random() * 1000);
-        fullsessionname = sessionname.replace(' ','-') + randomnr;
+        console.log(colors.bold.green('Ducklington: ') + 'Howdy! I am Ducklington. I am looking forward to assisting you. ')
+        console.log(colors.bold.green('Ducklington: ') + 'Could you first set a name for this session, you can also leave it empty. ')
+        
+        let sessionname = readlineSync.question(colors.yellow('Session Name: '));
+       
+        console.log(colors.bold.green(`Ducklington: `) + `You named the session "${sessionname}". Lovely!  `)
+        console.log(colors.bold.green(`Ducklington: `) + `What can I assist you with?`)
+        
+        // Get current date and time
+    let now = new Date();
+
+    // Format the date and time into the desired format
+    let year = now.getFullYear();
+    let month = (now.getMonth() + 1).toString().padStart(2, '0');  // padStart will ensure the month always has two digits
+    let date = now.getDate().toString().padStart(2, '0');
+    let hours = now.getHours().toString().padStart(2, '0');
+    let minutes = now.getMinutes().toString().padStart(2, '0');
+    let seconds = now.getSeconds().toString().padStart(2, '0');
+
+    // Construct the timestamp
+    let timestamp = `${year}-${month}-${date}_${hours}-${minutes}-${seconds}`;
+
+    fullsessionname = sessionname.replace(' ','-') + "~" + timestamp;
+
      }
+
+    
+     
     
 
     //  store chat history
@@ -84,12 +145,12 @@ async function main()
               // allow exiting the loop
               if (userInput.toLowerCase() === 'exit')
               {
-                console.log(colors.green('Bot: ' + completionText))
+                console.log(colors.green('Ducklington: ') + completionText)
                 return;
               }
 
             //   response of bot
-              console.log(colors.green('Bot: ' + completionText))
+              console.log(colors.green('Ducklington: ') + completionText)
 
               // Write or append to file
 
@@ -110,7 +171,7 @@ async function main()
                     if (err) {
                         return console.error(err);
                     }
-                    console.log("File written successfully");
+                    console.log("File written successfully: " + filename);
                 });
 
                 }
