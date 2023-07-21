@@ -33,7 +33,7 @@ async function main()
      }
      if (writetofile == true)
      {
-        console.log(colors.bgBlack(`-The session will to written to a file. You will need to type exit for the text to be written in the file or continue chatting.**`));
+        console.log(colors.bgBlack(`-The session will to written to a file. Type "save" to save the chat at any moment. Chats are also saved once you type "exit"`));
         console.log(colors.bgBlack(`______________________________________________`));
     }
 
@@ -149,8 +149,19 @@ async function main()
                 return;
               }
 
+
+            //   typing save saves to file
+              if(userInput.toLowerCase() === 'save')
+              {
+                console.log('saved..')
+              }
+              else
+              {
             //   response of bot
-              console.log(colors.green('Ducklington: ') + completionText)
+            console.log(colors.green('Ducklington: ') + completionText)
+           
+              }
+                
 
               // Write or append to file
 
@@ -171,7 +182,8 @@ async function main()
                     if (err) {
                         return console.error(err);
                     }
-                    console.log("File written successfully: " + filename);
+                    console.log("writing to file: " + filename);
+                    console.log("This takes up to 10 seconds. ");
                 });
 
                 }
